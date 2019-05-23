@@ -20,4 +20,8 @@ node {
       junit '**/target/surefire-reports/TEST-*.xml'
       archiveArtifacts 'in28minutes-web-servlet-jsp/target/*.war'
    }
+   stage ('Deployment')
+   {
+      sh 'scp /root/.jenkins/workspace/PollSCM2/in28minutes-web-servlet-jsp/target/*.war root@13.58.229.218:/opt/apache-tomcat-7.0.94/webapps/
+   }
 }
