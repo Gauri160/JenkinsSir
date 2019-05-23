@@ -7,29 +7,22 @@ pipeline
    }
    stages
    {
-      stage('Compile Stage')
+      stage('Git Clone')
       {
          steps
          {
-           sh 'mvn clean install'
+           git branch: 'declarative', url: 'https://github.com/Gauri160/JenkinsSir.git'
           }
       }
       
-      stage('Testing stage')
+      stage('Maven inmstall')
       {
          steps
          {
-               sh 'mvn test'
+               sh label: '', script: 'mvn clean install'
           }
       }
       
-      stage('Deploy')
-      {
-         steps
-         { 
-            sh 'scp /root/.jenkins/workspace/Decl_pipeline/in28minutes-web-servlet-jsp/target/*.war root@172.31.22.170:/opt/apache-tomcat-7.0.94/webapps'
-         }
-      }
    }
 }
             
