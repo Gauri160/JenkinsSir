@@ -18,6 +18,6 @@ node {
    }
    stage('Results') {
       junit '**/target/surefire-reports/TEST-*.xml'
-      archiveArtifacts 'in28minutes-web-servlet-jsp/target/*.war'
+      archiveArtifacts '/root/.jenkins/workspace/PollSCM2/in28minutes-web-servlet-jsp/target/*.war'
    }
 }
