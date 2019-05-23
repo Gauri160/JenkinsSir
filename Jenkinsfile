@@ -1,14 +1,23 @@
 node {
    def mvnHome
-   stage('Cloning Repo') { 
+   stage('Cloning Repo') { // for display purposes
+      // Get some code from a GitHub repository
       git 'https://github.com/Gauri160/JenkinsSir.git'
-         
+      // Get the Maven tool.
+      // ** NOTE: This 'M3' Maven tool must be configured
+      // **       in the global configuration.           
       mvnHome = tool 'MVN'
    }
    stage('Build') {
-        sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean install"
-       }
+      // Run the maven build
+      if (isUnix()) {
+         sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean install"
+      } else {
+         bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean package/)
+      }
+   }
    stage('Results') {
-         archiveArtifacts 'in28minutes-web-servlet-jsp/target/*.war'
+      junit '**/target/surefire-reports/TEST-*.xml'
+      archiveArtifacts 'in28minutes-web-servlet-jsp/target/*.war'
    }
 }
